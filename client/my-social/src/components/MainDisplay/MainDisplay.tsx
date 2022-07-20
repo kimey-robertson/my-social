@@ -1,4 +1,5 @@
 import React from 'react'
+import Posts from '../Posts/Posts';
 import './MainDisplay.css';
 
 export default function MainDisplay() {
@@ -12,6 +13,7 @@ export default function MainDisplay() {
             </div>
             <div className='row'>
                 <div className='col'>
+                    <Posts />
                 </div>
             </div>
         </div>
