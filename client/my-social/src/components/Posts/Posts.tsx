@@ -2,39 +2,38 @@ import React from 'react'
 import './Posts.css';
 import {
     setRedditData,
+    setPostsLoaded
   } from "../../features/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector } from "../../app/hooks";
 
 export default function Posts() {
   const dispatch = useDispatch();
-  const redditData = useAppSelector(state => state.posts.redditData);
+  const posts = useAppSelector(state => state.posts);
+  const redditData = posts.redditData;
 
   async function searchReddit() {
     const url = `https://www.reddit.com/search.json?q=hello`;
     const res = await fetch(url);
     const data = await res.json();
-    dispatch(setRedditData(data));
+    if (posts.onPosts === true && posts.postsLoaded === false) {
+      dispatch(setRedditData(data));
+      dispatch(setPostsLoaded(true));
+    }
   }
 
-//   function handleSubmit(event: any) {
-//     event.preventDefault();
-//     // dispatch(setCurrentlyOpenedPost(''));
-//     searchReddit(event.target.search.value);
-    
-//   }
-
+  searchReddit()
 
   return (
     <div className='posts' >
-        <button
+        {/* <button
         id='post-btn' 
         className='btn'
         onClick={() => {
-            searchReddit()
+            // searchReddit()
         }}>
             Hello
-        </button>
+        </button> */}
         {redditData.data && redditData.data.children.map((post: { data: { subreddit: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }; }) => (
         <div 
             id='post' 
@@ -43,9 +42,9 @@ export default function Posts() {
                 <br />
                 {post.data.title}
             </div>
-            <div className='col'>
+            {/* <div className='col'>
 
-            </div>
+            </div> */}
         </div>
         ))
         }

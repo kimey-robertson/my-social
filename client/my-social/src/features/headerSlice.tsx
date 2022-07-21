@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: any = {
-    redditData: {},
-    onPosts: false,
-    postsLoaded: false
+
   };
 
-export const postsSlice = createSlice({
-    name: "posts",
+export const headerSlice = createSlice({
+    name: "header",
     initialState: initialState,
     reducers: {
         setRedditData: (state, action) => {
@@ -23,5 +21,5 @@ export const postsSlice = createSlice({
 
 });
 
-export const { setRedditData, setOnPosts, setPostsLoaded } = postsSlice.actions;
-export default postsSlice.reducer;
+export const { setRedditData, setOnPosts, setPostsLoaded } = headerSlice.actions;
+export default headerSlice.reducer;

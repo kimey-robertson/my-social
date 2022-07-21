@@ -7,12 +7,13 @@
 
 #post {
     display: inline-flex;
-    width: 70%;
+    width: 85%;
     height: 6%;
     /* border: red 1px solid; */
     margin: 1%;
     background-color: rgba(190, 190, 185, 0.823);
     justify-content: space-evenly;
+    border-radius: 10%;
 }
 
 #post-btn {

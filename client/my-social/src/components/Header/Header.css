@@ -2,7 +2,7 @@
     width: 100%;
     max-width: 100%;
     padding: 0;
-    margin: 0;
+    margin: 0 2% 0 0;
     position: fixed;
   }
   
@@ -20,9 +20,8 @@
     height: 65px;
   }
   
-  #header p {
-    margin-top: 1%;
-    justify-self: center;
+  .header p {
+    margin: 0;
   }
 
   #home-btn {
@@ -37,4 +36,13 @@
 
   #main-header {
 
+  }
+
+  #profile-btn {
+    border: black 1px solid;
+    margin: 6%;
+  }
+
+  #profile-btn-header {
+    justify-content: end;
   }

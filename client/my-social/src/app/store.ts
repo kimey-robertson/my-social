@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import postsReducer from '../features/postsSlice';
+import headerReducer from '../features/headerSlice';
 
 export const store = configureStore({
   reducer: {
-    posts: postsReducer
+    posts: postsReducer,
+    // header: headerReducer
   },
 });
 
