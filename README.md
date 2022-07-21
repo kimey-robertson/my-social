@@ -39,3 +39,4 @@ Commits:
 3. First commit - more setup and basic code. The page now has a basic UI
 4. Added a fixed 'Header' component, as well as a 'MainDataDisplay' component which will display posts, profile, and other things.
 5. Added a 'home' button and a temporary 'hello' button which makes an call to the Reddit API and displays posts. This is just to show how the posts will look and where they will go. This will be changed to a call to my own API/back end and database with user posts.
+6. Added a left and right sidebar, with temporary list items, to be properyl implemented later. Also got rid of the 'hello' button, and moved it's functionality to the 'home' button, which sets the 'onPosts' state to true, which displays the posts.
