@@ -8,12 +8,14 @@
 #post {
     display: inline-flex;
     width: 85%;
-    height: 6%;
+    /* height: 6%; */
     /* border: red 1px solid; */
-    margin: 1%;
+    margin: 1.75%;
+    padding: 4%;
     background-color: rgba(190, 190, 185, 0.823);
     justify-content: space-evenly;
     border-radius: 10%;
+    
 }
 
 #post-btn {

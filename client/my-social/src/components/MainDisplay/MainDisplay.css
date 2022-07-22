@@ -6,4 +6,10 @@ main {
 
 .sidebar {
   background-color: rgb(114, 147, 239);
+  /* height: 100vh; */
+  height: 100%;
+}
+
+.fixed {
+  position: fixed;
 }

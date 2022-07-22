@@ -25,15 +25,7 @@ export default function Posts() {
   searchReddit()
 
   return (
-    <div className='posts' >
-        {/* <button
-        id='post-btn' 
-        className='btn'
-        onClick={() => {
-            // searchReddit()
-        }}>
-            Hello
-        </button> */}
+    <div className='posts'>
         {redditData.data && redditData.data.children.map((post: { data: { subreddit: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }; }) => (
         <div 
             id='post' 
@@ -42,9 +34,6 @@ export default function Posts() {
                 <br />
                 {post.data.title}
             </div>
-            {/* <div className='col'>
-
-            </div> */}
         </div>
         ))
         }

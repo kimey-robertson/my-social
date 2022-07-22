@@ -3,7 +3,7 @@ import './LeftSidebar.css';
 
 export default function LeftSidebar() {
   return (
-    <div>
+    <div className='fixed'>
       <ul>
         <li>User name</li>
         <li>Friends</li>

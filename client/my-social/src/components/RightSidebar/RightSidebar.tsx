@@ -3,7 +3,7 @@ import './RightSidebar.css';
 
 export default function RightSidebar() {
   return (
-    <div>
+    <div className='fixed'>
         <ul>
             <li>Whats happening:</li>
             <li>Popular posts</li>
