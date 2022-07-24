@@ -9,7 +9,7 @@ function App() {
       <div className='container-fluid' id='root-container'>
         <div className="App">
           <Header />
-          < MainDisplay />
+          <MainDisplay />
           
         </div>
       </div>
