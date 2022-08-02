@@ -1,3 +1,6 @@
+// This slice is not being used yet
+
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: any = {

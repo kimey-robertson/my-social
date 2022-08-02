@@ -1,7 +1,7 @@
 import React from 'react'
 import './Posts.css';
 import {
-    setRedditData,
+    setPostsData,
     setPostsLoaded
   } from "../../features/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,29 +10,33 @@ import { useAppSelector } from "../../app/hooks";
 export default function Posts() {
   const dispatch = useDispatch();
   const posts = useAppSelector(state => state.posts);
-  const redditData = posts.redditData;
+  const postsData = posts.postsData;
 
-  async function searchReddit() {
-    const url = `https://www.reddit.com/search.json?q=hello`;
+  // Fetching the post data from the db
+  async function displayPosts() {
+    const url = `http://localhost:3001/posts`;
     const res = await fetch(url);
     const data = await res.json();
+    // I'll probably change this system, rather than onPosts = true I'll use something
+    // like currentPage = x
     if (posts.onPosts === true && posts.postsLoaded === false) {
-      dispatch(setRedditData(data));
+      dispatch(setPostsData(data));
       dispatch(setPostsLoaded(true));
     }
   }
 
-  searchReddit()
+  displayPosts()
 
   return (
+    // First we check if there are any posts in postData using length, then we we map over the posts array
     <div className='posts'>
-        {redditData.data && redditData.data.children.map((post: { data: { subreddit: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }; }) => (
+        {postsData.length > 0 && postsData.map((post: { subreddit: string, title: string } ) => (
         <div 
             id='post' 
             className='row'>
-            <div className='col'> r/{post.data.subreddit}
+            <div className='col'> r/{post.subreddit}
                 <br />
-                {post.data.title}
+                {post.title}
             </div>
         </div>
         ))
