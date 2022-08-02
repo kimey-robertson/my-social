@@ -25,6 +25,7 @@ Back end:
 - CORS
 - DOTENV
 - Concurrently
+- node-postgres
 
 Plans to add for future:
 - Database integration with PostgreSQL
@@ -42,3 +43,4 @@ Commits:
 6. Added a left and right sidebar, with temporary list items, to be properly implemented later. Also got rid of the 'hello' button, and moved it's functionality to the 'home' button, which sets the 'onPosts' state to true, which displays the posts.
 7. Made the sidebars stayed fixed to the side of the pages, independant of what's happening in the middle. Posts/no posts. Also added some state that displays posts if they are available, and if they aren't simply says 'no posts available'.
 8. Added some comments
+9. Started incorporating PostgreSQL database integration. Added node-postgres as a dependency. Now building in queries through HTTP requests.
