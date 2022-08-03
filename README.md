@@ -44,3 +44,4 @@ Commits:
 7. Made the sidebars stayed fixed to the side of the pages, independant of what's happening in the middle. Posts/no posts. Also added some state that displays posts if they are available, and if they aren't simply says 'no posts available'.
 8. Added some comments
 9. Started incorporating PostgreSQL database integration. Added node-postgres as a dependency. Now building in queries through HTTP requests.
+10. Added first successful database functionality!! First basic get request set up using node-postgres pooling. The front end no longer calls the reddit API. Rather, it does a fetch call to the back end for a basic 'posts' get request. The posts are displayed the same way as before, but they are coming directly from my back end and database.
