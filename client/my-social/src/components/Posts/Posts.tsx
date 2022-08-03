@@ -4,12 +4,13 @@ import {
     setPostsData,
     setPostsLoaded
   } from "../../features/postsSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../app/hooks";
 
 export default function Posts() {
   const dispatch = useDispatch();
   const posts = useAppSelector(state => state.posts);
+  const mainDisplay = useAppSelector(state => state.mainDisplay);
   const postsData = posts.postsData;
 
   // Fetching the post data from the db
@@ -17,9 +18,8 @@ export default function Posts() {
     const url = `http://localhost:3001/posts`;
     const res = await fetch(url);
     const data = await res.json();
-    // I'll probably change this system, rather than onPosts = true I'll use something
-    // like currentPage = x
-    if (posts.onPosts === true && posts.postsLoaded === false) {
+
+    if (mainDisplay.currentDisplay === 'posts' && posts.postsLoaded === false) {
       dispatch(setPostsData(data));
       dispatch(setPostsLoaded(true));
     }
@@ -28,19 +28,25 @@ export default function Posts() {
   displayPosts()
 
   return (
-    // First we check if there are any posts in postData using length, then we we map over the posts array
-    <div className='posts'>
-        {postsData.length > 0 && postsData.map((post: { subreddit: string, title: string } ) => (
-        <div 
-            id='post' 
-            className='row'>
-            <div className='col'> r/{post.subreddit}
-                <br />
-                {post.title}
-            </div>
-        </div>
-        ))
-        }
+    
+    <div>
+      <div className=''>
+
+      </div>
+      
+       {/* First we check if there are any posts in postData using length, then we we map over the posts array } */}
+      <div className='posts'>
+          {postsData.length > 0 && postsData.map((post: { subreddit: string, title: string } ) => (
+          <div 
+              id='post' 
+              className='row'>
+              <div className='col'> r/{post.subreddit}
+                  <br />
+                  {post.title}
+              </div>
+          </div>
+          ))}
+      </div>
     </div>
   )
 }

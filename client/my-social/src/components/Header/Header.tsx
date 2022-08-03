@@ -1,11 +1,11 @@
 import React from 'react'
 import './Header.css';
 import {
-    setPostsLoaded,
-    setOnPosts
+    setPostsLoaded
   } from "../../features/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector } from "../../app/hooks";
+import { setCurrentDisplay } from '../../features/mainDisplaySlice';
 
 export default function Header() {
 
@@ -18,7 +18,7 @@ const dispatch = useDispatch();
                     className='btn' 
                     id='home-btn'
                     onClick={() => {
-                        dispatch(setOnPosts(true))
+                        dispatch(setCurrentDisplay('posts'))
                     }}
                     >Home
                     </button>
@@ -27,8 +27,13 @@ const dispatch = useDispatch();
                     <p>My Social</p>
                 </div>
                 <div className='col header' id='profile-btn-header'>
-                    <button className='btn' id='profile-btn'>
-                        Profile
+                    <button 
+                    className='btn' 
+                    id='profile-btn'
+                    onClick={() => {
+                        dispatch(setCurrentDisplay('profile'))
+                    }}
+                    >Profile
                     </button>
                 </div>    
             </div>

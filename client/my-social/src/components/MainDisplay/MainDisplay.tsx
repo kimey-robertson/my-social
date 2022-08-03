@@ -7,7 +7,8 @@ import { useAppSelector } from "../../app/hooks";
 import NoPosts from '../NoPosts/NoPosts';
 
 export default function MainDisplay() {
-  const posts = useAppSelector(state => state.posts);  
+  const posts = useAppSelector(state => state.posts);
+  const mainDisplay = useAppSelector(state => state.mainDisplay);    
 
 
   // The idea here is that there is two side bars either side of the main display section, which are both fixed, just like the header.
@@ -21,8 +22,9 @@ export default function MainDisplay() {
                 </div>
 
                 <div className='col-8'>
-                    {posts.onPosts === true && <Posts />}
-                    {posts.onPosts === false && <NoPosts />}
+                    {mainDisplay.currentDisplay === 'posts' && <Posts />}
+                    {/* {mainDisplay.currentDisplay === 'profile' && <Profile />} */}
+                    {/* {posts.onPosts === false && <NoPosts />} */}
                 </div>
                 <div className='col-2 sidebar'>
                     <RightSidebar />

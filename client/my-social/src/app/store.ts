@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import postsReducer from '../features/postsSlice';
+import mainDisplayReducer from '../features/mainDisplaySlice';
 import headerReducer from '../features/headerSlice';
 
 export const store = configureStore({
   reducer: {
     posts: postsReducer,
+    mainDisplay: mainDisplayReducer
     // header: headerReducer
   },
 });

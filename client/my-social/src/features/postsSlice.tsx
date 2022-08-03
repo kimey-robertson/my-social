@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: any = {
-    postsData: {},
-    onPosts: false,
+    postsData: [],
     postsLoaded: false
   };
 
@@ -14,11 +13,7 @@ export const postsSlice = createSlice({
         setPostsData: (state, action) => {
             state.postsData = action.payload;
           },
-      // This is used to set the current main display as on posts
-        setOnPosts: (state, action) => {
-            state.onPosts = action.payload;
-          },
-      // 
+      // This is just so the page doesn't endlessly make a get request while 'currentDisplay' is 'posts'
         setPostsLoaded: (state, action) => {
             state.postsLoaded = action.payload;
           }
@@ -26,5 +21,5 @@ export const postsSlice = createSlice({
 
 });
 
-export const { setPostsData, setOnPosts, setPostsLoaded } = postsSlice.actions;
+export const { setPostsData, setPostsLoaded } = postsSlice.actions;
 export default postsSlice.reducer;
