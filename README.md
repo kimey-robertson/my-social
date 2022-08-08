@@ -45,4 +45,5 @@ Commits:
 8. Added some comments
 9. Started incorporating PostgreSQL database integration. Added node-postgres as a dependency. Now building in queries through HTTP requests.
 10. Added first successful database functionality!! First basic get request set up using node-postgres pooling. The front end no longer calls the reddit API. Rather, it does a fetch call to the back end for a basic 'posts' get request. The posts are displayed the same way as before, but they are coming directly from my back end and database.
-11. Organised things a bit. Added a 'mainDisplaySlice' which controls which display you're currently on. Changed this from 'onPosts: true' for example to 'currentDisplay: posts'. This is in prep for the profile page which is to be added. Also stopped using the 'NoPosts' component, I may remove it all together, as there will basically always be posts available I think. 
+11. Organised things a bit. Added a 'mainDisplaySlice' which controls which display you're currently on. Changed this from 'onPosts: true' for example to 'currentDisplay: posts'. This is in prep for the profile page which is to be added. Also stopped using the 'NoPosts' component, I may remove it all together, as there will basically always be posts available I think.
+12. Added a very basic post request function.
