@@ -2,7 +2,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
 #post {
@@ -18,7 +18,17 @@
     
 }
 
-#post-btn {
-    left: 0;
-    position: absolute;
+.post-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#post-input-box {
+    border: 1px solid black;
+    border-radius: 5%;
+    width: 60%;
+    height: 5%;
 }
