@@ -20,7 +20,7 @@ const getPosts = (req, res) => {
 const postPost = (req, res) => {
   query = ` 
   INSERT INTO posts (title, subreddit)
-  VALUES ('${req.body.postContent}', NULL); 
+  VALUES ('${req.body.postContent}', '${req.body.postAuthor}'); 
   `
 
   pool.query(query, (error, results) => {
@@ -29,8 +29,6 @@ const postPost = (req, res) => {
     }
     res.status(200).json(results.rows);
   });
-  // // console.log(query);
-  // res.status(200).json({ message: "post inserted successfully" });
 };
 
 module.exports = {

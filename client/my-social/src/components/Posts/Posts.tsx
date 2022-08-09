@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import './Posts.css';
 import {
     setPostsData,
@@ -13,6 +13,10 @@ export default function Posts() {
   const mainDisplay = useAppSelector(state => state.mainDisplay);
   const postsData = posts.postsData;
 
+  // Local state for clearing the input posts input form
+  // const [postAuthor, setPostAuthor] = useState('');
+  // const [postContent, setPostContent] = useState('');
+
   // Fetching the post data from the db
   async function displayPosts() {
     console.log("calling displayPosts()")
@@ -26,7 +30,7 @@ export default function Posts() {
     }
   };
 
-  async function createPost(data: {postContent: string}) {
+  async function createPost(data: {postContent: string, postAuthor: string}) {
     console.log(data)
     const url = `http://localhost:3001/posts`;
     const res = await fetch(url, {
@@ -40,9 +44,13 @@ export default function Posts() {
   }
 
   function handleCreatePostSubmit(event: any) {
-    event.preventDefault();
-    // console.log(event.target.create.value)
-    createPost({postContent: event.target.create.value});
+    // event.preventDefault();
+    createPost({
+      postContent: event.target.postContent.value,
+      postAuthor: event.target.postAuthor.value
+    });
+    // setPostAuthor('')
+    // setPostContent('')
   }
 
   useEffect(() => {
@@ -53,17 +61,21 @@ export default function Posts() {
   return (
     
     <div>
-      <div className='post-input-container'>
-        <div id='post-input-box'>
+      <div className='post-input-container container-fluid'>
+        <div className='row' id='post-input-row'>
           <form onSubmit={handleCreatePostSubmit}>
-            <div>
-              {/* <input 
-              type="number" 
-              /> */}
+            <div className='col' id='post-input-box'>
               <input
-                id="create"
+                id="postAuthor"
+                type="text"
+                placeholder="Name"
+                // value={postAuthor}
+              />
+                <input
+                id="postContent"
                 type="text"
                 placeholder="What's on your mind?.. "
+                // value={postContent}
               />
               <button className="btn" type="submit">
                 Submit
@@ -84,7 +96,7 @@ export default function Posts() {
                   {post.title}
               </div>
           </div>
-          ))}
+          )).reverse()}
       </div>
     </div>
   )
