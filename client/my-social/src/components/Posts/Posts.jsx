@@ -19,7 +19,6 @@ export default function Posts() {
 
   // Fetching the post data from the db
   async function displayPosts() {
-    console.log("calling displayPosts()")
     const url = `http://localhost:3001/posts`;
     const res = await fetch(url);
     const data = await res.json();
@@ -30,7 +29,7 @@ export default function Posts() {
     }
   };
 
-  async function createPost(data: {postContent: string, postAuthor: string}) {
+  async function createPost(data) {
     console.log(data)
     const url = `http://localhost:3001/posts`;
     const res = await fetch(url, {
@@ -39,11 +38,17 @@ export default function Posts() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    });
+      
+    })
+
+    if (res.status === 422) {
+      console.log('name and content are required')
+    }
+    console.log(res)
     return res.json();
   }
 
-  function handleCreatePostSubmit(event: any) {
+  function handleCreatePostSubmit(event) {
     // event.preventDefault();
     createPost({
       postContent: event.target.postContent.value,
@@ -87,15 +92,17 @@ export default function Posts() {
       
        {/* First we check if there are any posts in postData using length, then we we map over the posts array } */}
       <div className='posts'>
-          {postsData.length > 0 && postsData.map((post: { subreddit: string, title: string } ) => (
+          {postsData.length > 0 && postsData.map((post) => (
           <div 
               id='post' 
-              className='row'>
-              <div className='col'> {post.subreddit}
+              className='row'
+              key={post.id}>
+              <div className='col'> {post.content}
                   <br />
-                  {post.title}
+                  {post.name}
               </div>
           </div>
+          // Reverse the array to put the newest post first
           )).reverse()}
       </div>
     </div>

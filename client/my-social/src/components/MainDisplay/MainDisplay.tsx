@@ -5,6 +5,7 @@ import RightSidebar from '../RightSidebar/RightSidebar';
 import './MainDisplay.css';
 import { useAppSelector } from "../../app/hooks";
 import NoPosts from '../NoPosts/NoPosts';
+import Profile from '../Profile/Profile';
 
 export default function MainDisplay() {
   const posts = useAppSelector(state => state.posts);
@@ -23,8 +24,7 @@ export default function MainDisplay() {
 
                 <div className='col-8'>
                     {mainDisplay.currentDisplay === 'posts' && <Posts />}
-                    {/* {mainDisplay.currentDisplay === 'profile' && <Profile />} */}
-                    {/* {posts.onPosts === false && <NoPosts />} */}
+                    {mainDisplay.currentDisplay === 'profile' && <Profile />}
                 </div>
                 <div className='col-2 sidebar'>
                     <RightSidebar />

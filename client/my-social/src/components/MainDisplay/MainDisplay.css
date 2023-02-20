@@ -5,7 +5,7 @@ main {
   }
 
 .sidebar {
-  background-color: rgb(114, 147, 239);
+  background-color: rgba(255, 255, 255, 0.69);
   /* height: 100vh; */
   height: 100%;
 }

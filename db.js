@@ -2,12 +2,19 @@
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: "macosx",
-  host: "localhost",
+  user: "postgres",
+  host: "my-social.cydhx7us2rou.ap-southeast-2.rds.amazonaws.com",
   database: "my-social",
-  password: "password",
+  password: "psa12345",
   port: 5432,
 });
+
+// Valide post input
+
+function isValidPostInput(post) {
+  return post.postAuthor && post.postAuthor.toString().trim() !== '' &&
+          post.postContent && post.postContent.toString().trim() !== ''
+}
 
 const getPosts = (req, res) => {
   pool.query("SELECT * FROM posts ORDER BY id ASC", (error, results) => {
@@ -17,18 +24,24 @@ const getPosts = (req, res) => {
     res.status(200).json(results.rows);
   });
 };
-const postPost = (req, res) => {
-  query = ` 
-  INSERT INTO posts (title, subreddit)
-  VALUES ('${req.body.postContent}', '${req.body.postAuthor}'); 
-  `
 
-  pool.query(query, (error, results) => {
-    if (error) {
-      throw error;
-    }
-    res.status(200).json(results.rows);
-  });
+const postPost = (req, res) => {
+  if (isValidPostInput(req.body)) {
+    query = ` 
+    INSERT INTO posts (name, content)
+    VALUES ('${req.body.postContent}', '${req.body.postAuthor}'); 
+    `
+
+    pool.query(query, (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).json(results.rows);
+    });
+  } else {
+    res.status(422);
+    res.json({message: 'name and content required'})
+  }
 };
 
 module.exports = {
