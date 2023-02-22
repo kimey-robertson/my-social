@@ -16,6 +16,11 @@ function isValidPostInput(post) {
           post.postContent && post.postContent.toString().trim() !== ''
 }
 
+function isValidUserInput(user) {
+  return user.username && user.username.toString().trim() !== '' &&
+          user.password && user.password.toString().trim() !== ''
+}
+
 const getPosts = (req, res) => {
   pool.query("SELECT * FROM posts ORDER BY id ASC", (error, results) => {
     if (error) {
@@ -45,7 +50,7 @@ const postPost = (req, res) => {
   }
 };
 
-const getUser = (req, res) => {
+const getAllUserInfo = (req, res) => {
   pool.query(`SELECT * FROM users WHERE username = '${req.query.username}';`, (error, results) => {
     if (error) {
       throw error;
@@ -55,8 +60,39 @@ const getUser = (req, res) => {
   });
 }
 
+const getUser = (req, res) => {
+  pool.query(`SELECT username FROM users WHERE username = '${req.query.username}';`, (error, results) => {
+    if (error) {
+      throw error;
+    }
+    res.status(200).json(results.rows);
+  });
+}
+
+const postUser = (req, res) => {
+  console.log(req.body)
+  if (isValidUserInput(req.body)) {
+    query = ` 
+    INSERT INTO users (username, password)
+    VALUES ('${req.body.username}', '${req.body.password}'); 
+    `
+
+    pool.query(query, (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).json(results.rows);
+    });
+  } else {
+    res.status(422);
+    res.json({message: 'name and password required'})
+  }
+};
+
 module.exports = {
   getPosts,
   postPost,
-  getUser
+  getAllUserInfo,
+  getUser,
+  postUser
 };

@@ -2,54 +2,53 @@ import { React, useState, useEffect } from 'react';
 import './LoginDisplay.css';
 import { setUserData, setCurrentUser, setLoggedIn, setCreateAccountDisplay } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import LoginStatus from '../LoginStatus/LoginStatus';
 
 export default function LoginDisplay() {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
-  const userData = user.userData;
+  const [loginStatusState, setLoginStatusState] = useState(0);
 
   async function getUser(username) {
-    console.log('in getUser')
-    const url = `http://localhost:3001/user?username=${username}`;
+    const url = `http://localhost:3001/userAll?username=${username}`;
     const res = await fetch(url);
     const data = await res.json();
     if (res.status === 422) {
       console.log('error')
     }
-    dispatch(setUserData(data))
-    console.log('user data set')
+
+    return data
   }
 
   async function handleGetUserSubmit(event) {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
-    await getUser(username);
-    console.log('after getUser')
-    logUserIn(username, password);
+    const data = await getUser(username);
+    logUserIn(username, password, data);
   }
 
-  function logUserIn(username, password) {
-    console.log('in logUserIn')
-    console.log(userData)
+  function logUserIn(username, password, data) {
         // Check if there is any userData
-        if (userData[0]) {
-          console.log('after if statement')
+        if (data[0]) {
           // Check if password entered was same as the password stored in the db
-          if (userData[0].password === password) {
+          if (data[0].password === password) {
             // Set local storage and redux state as user logged in
-            console.log('running dispatch')
             localStorage.setItem('profile', username);
             dispatch(setLoggedIn(true))
             dispatch(setCurrentUser())
+            setLoginStatusState(0)
+          } else {
+            // If password is incorrect
+            setLoginStatusState(5)
           }
+        } else {
+          // If there is no matching username
+          setLoginStatusState(4)
         }
-        // Should be done to remove userData
-        // dispatch(setUserData({}))
+
   }
 
   function signUpButton() {
-    console.log('sign up button')
     dispatch(setCreateAccountDisplay(true))
   }
 
@@ -60,6 +59,8 @@ export default function LoginDisplay() {
     
         <div className="login-container container">
         <form className="login-form" onSubmit={handleGetUserSubmit}>
+            <h2>Enter your login details</h2>
+            {loginStatusState != 0 && <LoginStatus loginStatusState={loginStatusState}/> }
             <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
@@ -67,6 +68,7 @@ export default function LoginDisplay() {
                 type="text"
                 className="form-control"
                 placeholder="Enter your username"
+                required
             />
             </div>
             <div className="form-group">
@@ -76,10 +78,11 @@ export default function LoginDisplay() {
                 type="password"
                 className="form-control"
                 placeholder="Enter your password"
+                required
             />
             </div>
             <button type="submit" className="btn btn-primary">
-            Submit
+            Log In
             </button>
             <button type="button" className="btn btn-primary" onClick={signUpButton}>
             Sign Up
