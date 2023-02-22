@@ -3,12 +3,14 @@ import postsReducer from '../features/postsSlice';
 import mainDisplayReducer from '../features/mainDisplaySlice';
 import globalReducer from '../features/globalSlice';
 import headerReducer from '../features/headerSlice';
+import userReducer from '../features/userSlice';
 
 export const store = configureStore({
   reducer: {
     posts: postsReducer,
     mainDisplay: mainDisplayReducer,
-    global: globalReducer
+    // global: globalReducer,
+    user: userReducer
     // header: headerReducer
   },
 });

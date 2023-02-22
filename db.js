@@ -9,7 +9,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-// Valide post input
+// Validate post input
 
 function isValidPostInput(post) {
   return post.postAuthor && post.postAuthor.toString().trim() !== '' &&
@@ -26,6 +26,7 @@ const getPosts = (req, res) => {
 };
 
 const postPost = (req, res) => {
+  console.log(req.body)
   if (isValidPostInput(req.body)) {
     query = ` 
     INSERT INTO posts (name, content)
@@ -44,7 +45,18 @@ const postPost = (req, res) => {
   }
 };
 
+const getUser = (req, res) => {
+  pool.query(`SELECT * FROM users WHERE username = '${req.query.username}';`, (error, results) => {
+    if (error) {
+      throw error;
+    }
+    
+    res.status(200).json(results.rows);
+  });
+}
+
 module.exports = {
   getPosts,
   postPost,
+  getUser
 };

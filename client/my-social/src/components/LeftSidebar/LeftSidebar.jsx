@@ -1,7 +1,7 @@
 import React from 'react';
-import './RightSidebar.css';
+import './LeftSidebar.css';
 
-export default function RightSidebar() {
+export default function LeftSidebar() {
   return (
     <div className='fixed'>
         {/* <ul>
