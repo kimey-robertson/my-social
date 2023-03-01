@@ -29,9 +29,7 @@ Back end:
 
 Database:
 - Postgresql
+- AWS cloud database
 
 Plans to add for future:
-- Database integration with PostgreSQL
-- User create profile & login
 - Users have a profile, which they can edit, add about me etc.
-- Users can make posts, which everyone can see.
