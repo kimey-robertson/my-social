@@ -47,7 +47,7 @@ export default function MakePost() {
             <input
             id="postContent"
             type="text"
-            placeholder="What's on your mind?.. "
+            placeholder="What's on your mind?... "
             // value={postContent}
         />
         <button className="btn" type="submit">
