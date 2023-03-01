@@ -1,3 +1,7 @@
 .login-form h2 {
-  margin-bottom: 2.5vw;
+  margin-bottom: 1vw;
+}
+
+label  {
+  margin-top: 0.75vw;
 }

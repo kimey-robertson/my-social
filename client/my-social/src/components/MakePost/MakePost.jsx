@@ -1,7 +1,9 @@
 import React from 'react'
 import './MakePost.css';
+import { useSelector } from "react-redux";
 
 export default function MakePost() {
+  const currentUser = useSelector(state => state.user.currentUser)
 
     async function createPost(data) {
         console.log(data)
@@ -26,7 +28,7 @@ export default function MakePost() {
         event.preventDefault();
         createPost({
           postContent: event.target.postContent.value,
-          postAuthor: event.target.postAuthor.value
+          postAuthor: currentUser
         });
       }
  
@@ -36,12 +38,12 @@ export default function MakePost() {
     <div className='row' id='post-input-row'>
     <form onSubmit={handleCreatePostSubmit}>
         <div className='col' id='post-input-box'>
-        <input
+        {/* <input
             id="postAuthor"
             type="text"
             placeholder="Name"
             // value={postAuthor}
-        />
+        /> */}
             <input
             id="postContent"
             type="text"
