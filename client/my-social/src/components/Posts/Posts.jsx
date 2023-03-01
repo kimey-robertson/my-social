@@ -37,7 +37,7 @@ export default function Posts() {
   return (
     
     <div>
-      {/* < MakePost /> */}
+      < MakePost />
        {/* First we check if there are any posts in postData using length, then we we map over the posts array } */}
       <div className='posts'>
           {postsData.length > 0 && postsData.map((post) => (

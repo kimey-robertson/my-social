@@ -1,13 +1,12 @@
 import React from 'react';
 import './LeftSidebar.css';
+import { useSelector } from 'react-redux';
 
 export default function LeftSidebar() {
+  const currentUser = useSelector(state => state.user.currentUser)
   return (
     <div className='fixed'>
-        {/* <ul>
-            <li>Whats happening:</li>
-            <li>Popular posts</li>
-        </ul> */}
+      <div>Logged in as: {currentUser}</div>
     </div>
   )
 }

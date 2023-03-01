@@ -7,6 +7,7 @@ import LoginStatus from '../LoginStatus/LoginStatus';
 export default function LoginDisplay() {
   const dispatch = useDispatch();
   const [loginStatusState, setLoginStatusState] = useState(0);
+  const currentUser = useSelector(state => state.user.currentUser)
 
   async function getUser(username) {
     const url = `http://localhost:3001/userAll?username=${username}`;
@@ -51,6 +52,12 @@ export default function LoginDisplay() {
   function signUpButton() {
     dispatch(setCreateAccountDisplay(true))
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('profile')) {
+      dispatch(setCurrentUser())
+    }
+  }, [currentUser]);
 
 
 
