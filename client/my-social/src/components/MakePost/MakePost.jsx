@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export default function MakePost() {
   const currentUser = useSelector(state => state.user.currentUser)
+  const posts = useSelector(state => state.posts.postsData)
 
     async function createPost(data) {
         console.log(data)
@@ -25,12 +26,14 @@ export default function MakePost() {
       }
     
       function handleCreatePostSubmit(event) {
-        event.preventDefault();
+        // event.preventDefault();
         createPost({
           postContent: event.target.postContent.value,
           postAuthor: currentUser
         });
       }
+
+
  
 
   return (
@@ -38,17 +41,10 @@ export default function MakePost() {
     <div className='row' id='post-input-row'>
     <form onSubmit={handleCreatePostSubmit}>
         <div className='col' id='post-input-box'>
-        {/* <input
-            id="postAuthor"
-            type="text"
-            placeholder="Name"
-            // value={postAuthor}
-        /> */}
             <input
             id="postContent"
             type="text"
             placeholder="What's on your mind?... "
-            // value={postContent}
         />
         <button className="btn" type="submit">
             Submit

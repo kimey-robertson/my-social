@@ -1,14 +1,9 @@
 main {
     width: 100%;
     font-size: calc(10px + 2vmin);
-    margin-top: 75px;
+    margin-top: 5vh;
+    height: 100%;
   }
-
-.sidebar {
-  background-color: rgba(255, 255, 255, 0.69);
-  /* height: 100vh; */
-  height: 100%;
-}
 
 .fixed {
   position: fixed;

@@ -13,6 +13,7 @@ export default function LoginDisplay() {
     const url = `http://localhost:3001/userAll?username=${username}`;
     const res = await fetch(url);
     const data = await res.json();
+    console.log(res)
     if (res.status === 422) {
       console.log('error')
     }
@@ -67,7 +68,7 @@ export default function LoginDisplay() {
         <div className="login-container container">
         <form className="login-form" onSubmit={handleGetUserSubmit}>
             <h2>Enter your login details</h2>
-            {loginStatusState != 0 && <LoginStatus loginStatusState={loginStatusState}/> }
+            {loginStatusState !== 0 && <LoginStatus loginStatusState={loginStatusState}/> }
             <div className="form-group">
             <label htmlFor="username">Username</label>
             <input

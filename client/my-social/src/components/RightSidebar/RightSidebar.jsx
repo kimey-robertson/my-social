@@ -1,10 +1,11 @@
 import React from 'react';
 import './RightSidebar.css';
 import { setLoggedIn, setCurrentUser } from '../../features/userSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function RightSidebar() {
   const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.user.currentUser)
   function handleLogoutSubmit(event) {
     event.preventDefault()
     localStorage.removeItem('profile')
@@ -13,8 +14,9 @@ export default function RightSidebar() {
   }
 
   return (
-    <div className='fixed'>
+    <div class='rightSideBar'>
       <form onSubmit={handleLogoutSubmit}>
+        <div>Logged in as: {currentUser}</div>
         <button type="submit" className="btn btn-primary" id='logout-btn'>
           Logout
         </button>
