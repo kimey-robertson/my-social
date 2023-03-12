@@ -7,15 +7,20 @@
     margin: 2rem 0;
   }
   
-  #post {
-    width: 30%;
-    padding: 2rem;
-    background-color: #f2f2f2;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin: 1rem;
-  }
+.post {
+  width: 30%;
+  padding: 1rem;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 1rem;
+}
+
+.post-author-container {
+  text-align: left;
+  padding-bottom: 20px;
+}
   
 
   

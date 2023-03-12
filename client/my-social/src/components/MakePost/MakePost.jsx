@@ -46,7 +46,7 @@ export default function MakePost() {
             type="text"
             placeholder="What's on your mind?... "
         />
-        <button className="btn" type="submit">
+        <button className="btn" type="submit" id='post-btn'>
             Submit
         </button>
         </div>

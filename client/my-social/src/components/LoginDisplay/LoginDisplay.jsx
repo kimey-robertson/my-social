@@ -1,23 +1,22 @@
 import { React, useState, useEffect } from 'react';
 import './LoginDisplay.css';
-import { setUserData, setCurrentUser, setLoggedIn, setCreateAccountDisplay } from "../../features/userSlice";
+import { setUserData, setCurrentUser, setLoggedIn, setCreateAccountDisplay, setUserBio } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LoginStatus from '../LoginStatus/LoginStatus';
 
 export default function LoginDisplay() {
   const dispatch = useDispatch();
   const [loginStatusState, setLoginStatusState] = useState(0);
+  const userData = useSelector(state => state.user)
   const currentUser = useSelector(state => state.user.currentUser)
 
   async function getUser(username) {
     const url = `http://localhost:3001/userAll?username=${username}`;
     const res = await fetch(url);
     const data = await res.json();
-    console.log(res)
     if (res.status === 422) {
       console.log('error')
     }
-
     return data
   }
 
@@ -39,6 +38,8 @@ export default function LoginDisplay() {
             dispatch(setLoggedIn(true))
             dispatch(setCurrentUser())
             setLoginStatusState(0)
+            localStorage.setItem('bio', data[0].bio);
+            dispatch(setUserBio())
           } else {
             // If password is incorrect
             setLoginStatusState(5)
@@ -58,7 +59,10 @@ export default function LoginDisplay() {
     if (localStorage.getItem('profile')) {
       dispatch(setCurrentUser())
     }
-  }, [currentUser]);
+    if (localStorage.getItem('bio')) {
+      dispatch(setUserBio())
+    }
+  }, [userData]);
 
 
 
@@ -89,10 +93,10 @@ export default function LoginDisplay() {
                 required
             />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary login-btns">
             Log In
             </button>
-            <button type="button" className="btn btn-primary" onClick={signUpButton}>
+            <button type="button" className="btn btn-primary login-btns" onClick={signUpButton}>
             Sign Up
             </button>
         </form>

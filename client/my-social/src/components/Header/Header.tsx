@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
 import { setCurrentDisplay } from '../../features/mainDisplaySlice';
-
+import '../mediaQueries.css'
 import './Header.css';
 
 const Header = () => {

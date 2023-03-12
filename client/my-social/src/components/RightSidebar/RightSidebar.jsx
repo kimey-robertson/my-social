@@ -14,9 +14,12 @@ export default function RightSidebar() {
   }
 
   return (
-    <div class='rightSideBar'>
+    <div className='rightSideBar'>
       <form onSubmit={handleLogoutSubmit}>
-        <div>Logged in as: {currentUser}</div>
+        <div className="user-container">
+          <p className="greeting">Welcome back,</p>
+          <p className="user">{currentUser}</p>
+        </div>
         <button type="submit" className="btn btn-primary" id='logout-btn'>
           Logout
         </button>

@@ -4,7 +4,8 @@ const initialState = {
     userData: [],
     loggedIn: false,
     currentUser: '',
-    createAccountDisplay: false
+    createAccountDisplay: false,
+    userBio: ''
   };
 
 export const userSlice = createSlice({
@@ -23,10 +24,13 @@ export const userSlice = createSlice({
           },
         setCreateAccountDisplay: (state, action) => {
           state.createAccountDisplay = action.payload
-          }
+          },
+        setUserBio: (state, action) => {
+          state.userBio = localStorage.getItem('bio')
+          },
     }
 
 });
 
-export const { setUserData, setLoggedIn, setCurrentUser, setCreateAccountDisplay } = userSlice.actions;
+export const { setUserData, setLoggedIn, setCurrentUser, setCreateAccountDisplay, setUserBio } = userSlice.actions;
 export default userSlice.reducer;

@@ -6,6 +6,7 @@ import './MainDisplay.css';
 import { useAppSelector } from "../../app/hooks";
 import NoPosts from '../NoPosts/NoPosts';
 import Profile from '../Profile/Profile';
+import '../mediaQueries.css'
 
 export default function MainDisplay() {
   const posts = useAppSelector(state => state.posts);

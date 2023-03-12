@@ -1,6 +1,6 @@
 /* Profile.css */
 
-.container {
+.profile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,3 +40,136 @@
     height: 30px;
   }
   
+  .edit-button {
+    top: 31px;
+    right: 280px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    background-color: #1e90ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+  
+  .edit-button:hover {
+    background-color: #0077be;
+  }
+  
+  .edit-button:focus {
+    outline: none;
+  }
+  
+  .username-input {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    width: 85%;
+    border-bottom: 1px solid black;
+    background-color: transparent;
+    padding: 0.1rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    font-size: 24px;
+    }
+
+.username-input:focus {
+  outline: none;
+  border-bottom: 2px solid blue;
+}
+
+.bio-input {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    width: 150%;
+    height: 300px;
+    height: 16.75vh;
+    border-bottom: 1px solid black;
+    background-color: transparent;
+    padding: 0.1rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    font-size: 24px;
+    }
+
+.bio-input:focus {
+  outline: none;
+  border-bottom: 2px solid blue;
+}
+
+.edit-profile-grid {
+  display: grid;
+  max-width: 500px;
+  grid-template-columns: repeat(3, 150px);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.edit-profile-grid img {
+  grid-column: 2/4;
+  margin-top: 7px;
+}
+
+.edit-profile-grid form {
+  grid-column: 1/4;
+}
+
+#profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#edit-name-btn {
+  background-color: #f5f5f5;;
+  border: none;
+  color: #1e90ff;
+  font-size: 15px;
+}
+
+.edit-name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.edit-name-container button {
+  position: relative;
+  left: 20px;
+}
+
+.edit-name-container input{
+  width: 30%;
+}
+
+#name-form {
+  width: 100%
+}
+
+.edit-bio-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#edit-bio-btn {
+  background-color: #f5f5f5;;
+  border: none;
+  color: #1e90ff;
+  font-size: 15px;
+}
+
+#bio-form {
+  width: 100%;
+}
+
+#bioInput {
+  width: 85%;
+  height: 180px;
+}

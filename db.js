@@ -31,10 +31,9 @@ const getPosts = (req, res) => {
 };
 
 const postPost = (req, res) => {
-  console.log(req.body)
   if (isValidPostInput(req.body)) {
     query = ` 
-    INSERT INTO posts (name, content)
+    INSERT INTO posts (content, author)
     VALUES ('${req.body.postContent}', '${req.body.postAuthor}'); 
     `
 
@@ -70,7 +69,6 @@ const getUser = (req, res) => {
 }
 
 const postUser = (req, res) => {
-  console.log(req.body)
   if (isValidUserInput(req.body)) {
     query = ` 
     INSERT INTO users (username, password)
@@ -89,10 +87,42 @@ const postUser = (req, res) => {
   }
 };
 
+const putUserInfo = (req, res) => {
+  if (req.body.bio) {
+    pool.query(`UPDATE users
+      SET bio = '${req.body.bio}'
+      WHERE username = '${req.body.username}'
+    `, (error, results) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Error updating user information' })
+        } else {
+          res.json({ message: 'User information updated successfully' })
+        }
+  })
+  } else {
+    pool.query(`UPDATE users
+      SET username = '${req.body.username}'
+      WHERE username = '${req.body.oldUsername}'
+      `, (error, results) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Error updating user information' });
+        } else {
+          res.json({ message: 'User information updated successfully' })
+        }
+  })
+  }
+}
+
+
+
+
 module.exports = {
   getPosts,
   postPost,
   getAllUserInfo,
   getUser,
-  postUser
+  postUser,
+  putUserInfo
 };

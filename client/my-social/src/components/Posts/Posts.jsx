@@ -14,10 +14,6 @@ export default function Posts() {
   const mainDisplay = useAppSelector(state => state.mainDisplay);
   const postsData = posts.postsData;
 
-  // Local state for clearing the input posts input form
-  // const [postAuthor, setPostAuthor] = useState('');
-  // const [postContent, setPostContent] = useState('');
-
   // Fetching the post data from the db
   async function displayPosts() {
     const url = `http://localhost:3001/posts`;
@@ -42,12 +38,11 @@ export default function Posts() {
       <div className='posts'>
           {postsData.length > 0 && postsData.map((post) => (
           <div 
-              id='post' 
-              className='row'
+              className='row post'
               key={post.id}>
-              <div className='col'> {post.content}
-                  <br />
-                  {post.name}
+              <div className='col'> 
+                  <div className='post-author-container'>{post.author}</div>
+                  {post.content}
               </div>
           </div>
           // Reverse the array to put the newest post first

@@ -1,0 +1,98 @@
+/* MAX-WIDTH 990px */
+@media screen and (max-width: 990px) {
+    body .post {
+        padding: 2rem 0;
+        width: 40%;
+    }
+
+    body .user-container p {
+        font-size: 1rem;
+    }
+
+    body .rightSideBar form {
+        position: relative;
+        top: 5%;
+        right: 50px;
+        width: 120px;
+    }
+
+    body #logout-btn {
+        font-size: 1rem;
+    }
+
+    body #postContent {
+        font-size: 1rem;
+    }
+
+    body .edit-btn {
+
+    }
+    
+}
+
+/* MAX-WIDTH 850px */
+@media screen and (max-width: 850px) {
+    body .edit-profile-grid {
+        margin-right: 40%;
+    }
+
+    body .edit-button {
+        top: -7px;
+        right: 78%;
+    }
+}
+
+/* MAX-WIDTH 600px */
+@media screen and (max-width: 600px) {
+    body #postContent {
+        font-size: 0.6rem;
+        padding: 10px;
+    }
+
+    body .post {
+        width: 100%;
+    }
+
+    body .sidebar {
+        background-color: transparent;
+    }
+
+    body .user-container p {
+        font-size: 0.6rem;
+    }
+
+    body #logout-btn {
+        font-size: 0.6rem;
+    }
+
+    body .rightSideBar form {
+        width: 80px;
+        right: 30px;
+    }
+
+    body .edit-profile-grid {
+        margin-top: 20%;
+        margin-right: 0;
+    }
+}
+
+/* MAX-WIDTH 460px */
+@media screen and (max-width: 460px) {
+
+
+    body .post-input-container {
+        width: 90%;
+    }
+
+    body .header {
+        padding: 1rem;
+    }
+
+    body .username-input {
+        width: 65%;
+    }
+
+    body #bioInput {
+        width: 65%;
+    }
+}
