@@ -1,3 +1,4 @@
+const serverless = require('serverless-http');
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -48,3 +49,5 @@ app.listen(PORT, () => {
 
 const apiRouter = require("./routes/api");
 app.use("/", apiRouter);
+
+module.exports.handler = serverless(app);
