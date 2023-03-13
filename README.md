@@ -1,12 +1,12 @@
 # my-social
 
-This is my first full stack project.
+This project was my fist ever full stack project.
 
 It's a minimalistic clone of Facebook/generic social media site.
 
 It's a PERN stack application.
 
-Technologies used:
+## Technologies used:
 
 Front end:
 - Create React & Redux app
@@ -14,7 +14,6 @@ Front end:
 - Redux
 - React-Redux
 - Redux toolkit
-
 
 Back end:
 - Node
