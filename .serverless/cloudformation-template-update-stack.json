@@ -2,75 +2,6 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The AWS CloudFormation template for this Serverless application",
   "Resources": {
-    "ServerlessDeploymentBucket": {
-      "Type": "AWS::S3::Bucket",
-      "Properties": {
-        "BucketEncryption": {
-          "ServerSideEncryptionConfiguration": [
-            {
-              "ServerSideEncryptionByDefault": {
-                "SSEAlgorithm": "AES256"
-              }
-            }
-          ]
-        }
-      }
-    },
-    "ServerlessDeploymentBucketPolicy": {
-      "Type": "AWS::S3::BucketPolicy",
-      "Properties": {
-        "Bucket": {
-          "Ref": "ServerlessDeploymentBucket"
-        },
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": "s3:*",
-              "Effect": "Deny",
-              "Principal": "*",
-              "Resource": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":s3:::",
-                      {
-                        "Ref": "ServerlessDeploymentBucket"
-                      },
-                      "/*"
-                    ]
-                  ]
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":s3:::",
-                      {
-                        "Ref": "ServerlessDeploymentBucket"
-                      }
-                    ]
-                  ]
-                }
-              ],
-              "Condition": {
-                "Bool": {
-                  "aws:SecureTransport": false
-                }
-              }
-            }
-          ]
-        }
-      }
-    },
     "AppLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
@@ -159,10 +90,8 @@
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/my-social/dev/1678671617962-2023-03-13T01:40:17.962Z/my-social.zip"
+          "S3Bucket": "my-social-deployment-bucket",
+          "S3Key": "serverless/my-social/dev/1679091472381-2023-03-17T22:17:52.381Z/my-social.zip"
         },
         "Handler": "app/app.handler",
         "Runtime": "nodejs16.x",
@@ -180,14 +109,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionWWzDgbbDNIdB7aTpjLt1BIDtspUCH6F7wpv7ghZrjQo": {
+    "AppLambdaVersionYGJMubmSqYCYY56IM9rKQLxj4EQLqFTubQxTR92p10": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "MnGmC6gsUrKJcZDEIIeiP2MpHAHodEjT/0Jc9ed5DyE="
+        "CodeSha256": "6TQZYCZTvqnORRVYfLtv2PP/Wd/z3tCmDm1iYAzzOfQ="
       }
     },
     "ApiGatewayRestApi": {
@@ -405,7 +334,7 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1678671591196": {
+    "ApiGatewayDeployment1679091463151": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -460,9 +389,7 @@
   },
   "Outputs": {
     "ServerlessDeploymentBucketName": {
-      "Value": {
-        "Ref": "ServerlessDeploymentBucket"
-      },
+      "Value": "my-social-deployment-bucket",
       "Export": {
         "Name": "sls-my-social-dev-ServerlessDeploymentBucketName"
       }
@@ -470,7 +397,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionWWzDgbbDNIdB7aTpjLt1BIDtspUCH6F7wpv7ghZrjQo"
+        "Ref": "AppLambdaVersionYGJMubmSqYCYY56IM9rKQLxj4EQLqFTubQxTR92p10"
       },
       "Export": {
         "Name": "sls-my-social-dev-AppLambdaFunctionQualifiedArn"

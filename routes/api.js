@@ -7,14 +7,14 @@ router.get("/", (req, res) => {
 });
 router.get("/posts", db.getPosts);
 router.get("/userAll", db.getAllUserInfo);
-router.get("/user", db.getUser)
+router.get("/user", db.getUser);
 
 router.post("/posts", db.postPost);
-router.post("/user", db.postUser)
+router.post("/user", db.postUser);
 
-router.put("/user", db.putUserInfo)
+router.put("/user", db.putUserInfo);
 
-router.delete("/user", db.deleteUser)
+router.delete("/user", db.deleteUser);
 
 // INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
 // VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');

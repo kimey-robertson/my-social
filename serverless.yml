@@ -5,6 +5,8 @@ provider:
   stage: dev
   region: ap-southeast-2
   memorySize: 128
+  deploymentBucket:
+    name: my-social-deployment-bucket
 functions:
   app:
     handler: app/app.handler
@@ -17,3 +19,6 @@ functions:
           path: /{proxy+}
           method: ANY
           cors: true
+package:
+  patterns:
+    - '!client/**'

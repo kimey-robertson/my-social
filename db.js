@@ -1,12 +1,14 @@
 // Pooling is a node-postgres tool to be able to query the db through http requests
 
+require("dotenv").config();
+
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: "postgres",
-  host: "my-social.cydhx7us2rou.ap-southeast-2.rds.amazonaws.com",
-  database: "my-social",
-  password: "psa12345",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port:process.env.DB_PORT,
 });
 
 // Validate post input
