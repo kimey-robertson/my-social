@@ -36,6 +36,11 @@
         top: -7px;
         right: 78%;
     }
+
+    body .delete-profile-button {
+        top: 0px;
+        right: 78%;
+    }
 }
 
 /* MAX-WIDTH 600px */

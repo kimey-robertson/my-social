@@ -2,13 +2,15 @@ import React from 'react';
 import './Profile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { setCurrentUser, setUserBio } from "../../features/userSlice";
+import { setCurrentUser, setUserBio, setLoggedIn } from "../../features/userSlice";
 
 export default function Profile() {
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.user.currentUser)
   const userBio = useSelector(state => state.user.userBio)
   const [editingProfileState, setEditingProfileState] = useState(false);
+  const [deletingProfileState, setDeletingProfileState] = useState(false);
+  const [nameExistsState, setNameExistsState] = useState(false);
 
   async function updateUserInfo(userInfo) {
     try {
@@ -40,21 +42,16 @@ export default function Profile() {
     return data
   }
 
-  function handleEditProfileClick() {
-    if (editingProfileState === true) {
-      setEditingProfileState(false)
-    } else {
-      setEditingProfileState(true)
-    }
-  }
-
   async function handleSubmitUpdatedUsername(event) {
     event.preventDefault()
     const username = event.target.usernameInput.value
     const data = await getUser(username)
     if (data.length > 0) {
-      console.log('name already exists')
+      if (data[0].username !== currentUser) {
+        setNameExistsState(true)
+      }
     } else {
+      setNameExistsState(false)
       await updateUserInfo({
         oldUsername: currentUser,
         username: username,
@@ -80,24 +77,81 @@ export default function Profile() {
     }
   }
 
+  async function handleConfirmDeleteProfile() {
+    try {
+      const response = await fetch(`http://localhost:3001/user`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username: currentUser})
+      });
+      if (response.ok) {
+        const data = await response.json();
+      } else {
+        throw new Error('HTTP error ' + response.status);
+      }
+
+      localStorage.removeItem('profile')
+      dispatch(setLoggedIn(false))
+      dispatch(setCurrentUser())
+
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  // Toggles edit profile section, and untoggles if user goes to the delete profile section. Also removes the name exists if it was rendered.
+
+  function handleEditProfile() {
+    setNameExistsState(false)
+    if (deletingProfileState) {
+      setDeletingProfileState(false)
+    }
+    if (editingProfileState) {
+      setEditingProfileState(false)
+    } else {
+      setEditingProfileState(true)
+    }
+  }
+
+    // Toggles delete profile section, and untoggles if user goes to the edit profile section
+
+  function handleDeleteProfile() {
+    if (editingProfileState) {
+      setEditingProfileState(false)
+    }
+    if (deletingProfileState) {
+      setDeletingProfileState(false)
+    } else {
+      setDeletingProfileState(true)
+    }
+  }
+
 
   return (
     <div className="profile-container container">
         <button 
           className="edit-button"
-          onClick={handleEditProfileClick}
+          onClick={handleEditProfile}
           >Edit Profile
+        </button>
+        <button
+          className='delete-profile-button'
+          onClick={handleDeleteProfile}
+          >Delete Profile
         </button>
 
       {/* Not editing profile */}
       
-      { editingProfileState === false && 
+      { !editingProfileState && !deletingProfileState &&
         <div>
-          <img
+          {/* <img
             className="profile-pic"
             src="https://via.placeholder.com/150"
             alt="Profile"
-          />
+          /> */}
           <div className="username">{currentUser}</div>
           <div className="bio">{userBio}</div>
         </div>
@@ -105,13 +159,14 @@ export default function Profile() {
 
       {/* Editing profile */}
 
-      { editingProfileState === true && 
+      { editingProfileState && !deletingProfileState &&
       <div className='edit-profile-grid'>
-        <img
+        {/* <img
           className="profile-pic"
           src="https://via.placeholder.com/150"
           alt="Profile"
-        />
+        /> */}
+        { nameExistsState && <div className='name-exists'>Name already exists</div> }
         <form id='name-form' onSubmit={handleSubmitUpdatedUsername}>
             <input type="text" id="usernameInput" className="username-input" defaultValue={currentUser} />
             <button id='edit-name-btn'>Submit</button>
@@ -122,8 +177,22 @@ export default function Profile() {
         </form>
       </div>
       }
+
+      {/* Deleting profile */}
+
+      { !editingProfileState && deletingProfileState &&
+      <div className='confirm-profile-delete'>
+        <p>Are you sure you want to delete your profile? This action is irreversible and will log you out</p>
+        <button
+          className='really-delete-profile-button'
+          onClick={handleConfirmDeleteProfile}
+          >Delete!
+        </button>
+      </div>
+      }
       
-      
+      {/* {<div>editing profile: {JSON.stringify(editingProfileState)} </div>}
+      {<div>deleting profile: {JSON.stringify(deletingProfileState)} </div>} */}
       
     </div>
   )

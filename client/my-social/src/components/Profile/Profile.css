@@ -53,6 +53,8 @@
     border-radius: 5px;
     padding: 0.4rem 0.8rem;
     font-size: 0.7rem;
+    box-shadow: 0px 4px 0px #000099c4;
+    text-shadow: 0px 1px 0px #002d66;
   }
   
   .edit-button:hover {
@@ -172,4 +174,64 @@
 #bioInput {
   width: 85%;
   height: 180px;
+}
+
+.name-exists {
+  color: red;
+  width: 100%;
+  grid-column: 1/4;
+  font-size: 17px;
+  position: relative;
+  right: 28px;
+}
+
+.delete-profile-button {
+  position: relative;
+  top: 38px;
+  right: 280px;
+  background-color: red;
+  color: white;
+  border: none;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0px 4px 0px #990000;
+  text-shadow: 0px 1px 0px #660000;
+  cursor: pointer; 
+  width: 85px;
+  padding: 7.5px;
+}
+
+.delete-profile-button:hover {
+  background-color: #c24444;
+}
+
+.confirm-profile-delete {
+  background-color: #f5f5f5;
+  width: 50%;
+  height: 110px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirm-profile-delete p {
+  margin: 5px;
+  font-size: 15px;
+}
+
+.really-delete-profile-button {
+  background-color: red;
+  color: white;
+  border: none;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0px 4px 0px #990000;
+  text-shadow: 0px 1px 0px #660000;
+  cursor: pointer; 
+  width: 85px;
+  padding: 7.5px;
 }

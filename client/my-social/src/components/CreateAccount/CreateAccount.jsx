@@ -57,15 +57,20 @@ async function handleCreateAccountSubmit(event) {
             // If the password is too short
             setLoginStatusState(1)
         } else {
-            // Succesfully created account
-            setLoginStatusState(2)
-            createUser({
-                username: username, 
-                password: password
-            })
-            // Delay briefly the time to go back to the login screen
-            setTimeout(() => setLoginStatusState(0), 3000 )
-            setTimeout(() => dispatch(setCreateAccountDisplay(false)), 2000)
+            // If the username doesn't meet criteria
+            if (username.length < 3 || username.length > 15 || !isAlphanumeric(username)) {
+                setLoginStatusState(6)
+            } else {
+                // Succesfully created account
+                setLoginStatusState(2)
+                createUser({
+                    username: username, 
+                    password: password
+                })
+                // Delay briefly the time to go back to the login screen
+                setTimeout(() => setLoginStatusState(0), 3000 )
+                setTimeout(() => dispatch(setCreateAccountDisplay(false)), 2000)
+            }
         }
 
     }
@@ -73,7 +78,15 @@ async function handleCreateAccountSubmit(event) {
         // If the username already exists
         setLoginStatusState(3)
     }
-}  
+}
+
+function isAlphanumeric(input) {
+    // Create a regular expression that matches only alphanumeric characters
+    const alphanumericRegex = /^[0-9a-zA-Z]+$/;
+    
+    // Test the input against the regular expression
+    return alphanumericRegex.test(input);
+  }
 
   return (
     <div className="login-container container">

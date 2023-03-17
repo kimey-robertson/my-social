@@ -115,6 +115,19 @@ const putUserInfo = (req, res) => {
   }
 }
 
+const deleteUser = (req, res) => {
+  pool.query(`DELETE FROM users
+    WHERE username = '${req.body.username}'
+  `, (error, results) => {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error deleting user information' })
+      } else {
+        res.json({ message: 'User deletion successful' })
+      }
+  })
+}
+
 
 
 
@@ -124,5 +137,6 @@ module.exports = {
   getAllUserInfo,
   getUser,
   postUser,
-  putUserInfo
+  putUserInfo,
+  deleteUser
 };
