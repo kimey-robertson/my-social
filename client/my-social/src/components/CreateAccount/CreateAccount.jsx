@@ -13,7 +13,7 @@ const [loginStatusState, setLoginStatusState] = useState(0);
 
 
 async function getUser(username) {
-    const url = `http://localhost:3001/user?username=${username}`;
+    const url = `https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/user?username=${username}`;
     const res = await fetch(url);
     const data = await res.json();
     if (res.status === 422) {
@@ -29,7 +29,7 @@ async function getUser(username) {
 
 
 async function createUser(data) {
-    const url = `http://localhost:3001/user`;
+    const url = `https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/user`;
     const res = await fetch(url, {
         method: 'POST',
         headers: {

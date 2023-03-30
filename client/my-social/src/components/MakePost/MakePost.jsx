@@ -8,7 +8,7 @@ export default function MakePost() {
 
     async function createPost(data) {
         console.log(data)
-        const url = `http://localhost:3001/posts`;
+        const url = `https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/posts`;
         const res = await fetch(url, {
           method: 'POST',
           headers: {

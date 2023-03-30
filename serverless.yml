@@ -1,4 +1,4 @@
-service: my-social
+service: my-social-dev-app
 provider:
   name: aws
   runtime: nodejs16.x
@@ -13,12 +13,47 @@ functions:
     events: 
       - http: 
           path: /
-          method: ANY
-          cors: true
+          method: GET
+          cors:
+            origins:
+              - "http://localhost:3000"
+            headers:
+              - "Content-Type"
+              - "X-Amz-Date"
+              - "Authorization"
+              - "X-Api-Key"
+              - "X-Amz-Security-Token"
+              - "Access-Control-Allow-Origin"
+            allowCredentials: true
       - http: 
           path: /{proxy+}
           method: ANY
-          cors: true
+          cors:
+            origins:
+              - "http://localhost:3000"
+            headers:
+              - "Content-Type"
+              - "X-Amz-Date"
+              - "Authorization"
+              - "X-Api-Key"
+              - "X-Amz-Security-Token"
+              - "Access-Control-Allow-Origin"
+            allowCredentials: true
+      - http:
+          path: /posts
+          method: GET
+          cors:
+            origins:
+              - "http://localhost:3000"
+            headers:
+              - "Content-Type"
+              - "X-Amz-Date"
+              - "Authorization"
+              - "X-Api-Key"
+              - "X-Amz-Security-Token"
+              - "Access-Control-Allow-Origin"
+            allowCredentials: true
+        
 package:
   patterns:
     - '!client/**'

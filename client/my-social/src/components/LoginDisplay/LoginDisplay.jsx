@@ -11,7 +11,7 @@ export default function LoginDisplay() {
   const currentUser = useSelector(state => state.user.currentUser)
 
   async function getUser(username) {
-    const url = `http://localhost:3001/userAll?username=${username}`;
+    const url = `https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/userAll?username=${username}`;
     const res = await fetch(url);
     const data = await res.json();
     if (res.status === 422) {

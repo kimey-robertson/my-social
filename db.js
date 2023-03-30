@@ -8,7 +8,7 @@ const pool = new Pool({
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  port:process.env.DB_PORT,
+  port: process.env.DB_PORT
 });
 
 // Validate post input
@@ -24,12 +24,18 @@ function isValidUserInput(user) {
 }
 
 const getPosts = (req, res) => {
-  pool.query("SELECT * FROM posts ORDER BY id ASC", (error, results) => {
-    if (error) {
-      throw error;
-    }
-    res.status(200).json(results.rows);
-  });
+  try {
+    pool.query("SELECT * FROM posts ORDER BY id ASC", (error, results) => {
+      if (error) {
+        // throw error
+        res.send(error)
+      }
+      res.status(200).json(results.rows);
+    });
+
+   } catch(err) {
+      res.status(400).send(err.message)
+   }
 };
 
 const postPost = (req, res) => {

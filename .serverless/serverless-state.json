@@ -1,8 +1,8 @@
 {
   "service": {
-    "service": "my-social",
+    "service": "my-social-dev-app",
     "serviceObject": {
-      "name": "my-social"
+      "name": "my-social-dev-app"
     },
     "provider": {
       "name": "aws",
@@ -22,7 +22,7 @@
           "AppLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/my-social-dev-app"
+              "LogGroupName": "/aws/lambda/my-social-dev-app-dev-app"
             }
           },
           "IamRoleLambdaExecution": {
@@ -50,7 +50,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "my-social",
+                        "my-social-dev-app",
                         "dev",
                         "lambda"
                       ]
@@ -68,7 +68,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/my-social-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/my-social-dev-app-dev*:*"
                           }
                         ]
                       },
@@ -79,7 +79,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/my-social-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/my-social-dev-app-dev*:*:*"
                           }
                         ]
                       }
@@ -92,7 +92,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "my-social",
+                    "my-social-dev-app",
                     "dev",
                     {
                       "Ref": "AWS::Region"
@@ -108,11 +108,11 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "my-social-deployment-bucket",
-                "S3Key": "serverless/my-social/dev/1679091472381-2023-03-17T22:17:52.381Z/my-social.zip"
+                "S3Key": "serverless/my-social-dev-app/dev/1680154009594-2023-03-30T05:26:49.594Z/my-social-dev-app.zip"
               },
               "Handler": "app/app.handler",
               "Runtime": "nodejs16.x",
-              "FunctionName": "my-social-dev-app",
+              "FunctionName": "my-social-dev-app-dev-app",
               "MemorySize": 128,
               "Timeout": 6,
               "Role": {
@@ -126,20 +126,20 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionYGJMubmSqYCYY56IM9rKQLxj4EQLqFTubQxTR92p10": {
+          "AppLambdaVersionofSTD6KAoHhAcdjGftqksbYSWZ2SaDRI4ywFqnLZg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "6TQZYCZTvqnORRVYfLtv2PP/Wd/z3tCmDm1iYAzzOfQ="
+              "CodeSha256": "4v05l0YUzRjF2BLJMLbs8NGnq5AVae3Uv6N5YZGh1Qc="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-my-social",
+              "Name": "dev-my-social-dev-app",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -163,6 +163,21 @@
               }
             }
           },
+          "ApiGatewayResourcePosts": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "posts",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
           "ApiGatewayMethodOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
@@ -174,7 +189,8 @@
                   "ResponseParameters": {
                     "method.response.header.Access-Control-Allow-Origin": true,
                     "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
                   },
                   "ResponseModels": {}
                 }
@@ -190,12 +206,13 @@
                   {
                     "StatusCode": "200",
                     "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                      "method.response.header.Access-Control-Allow-Origin": "'http://localhost:3000'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,Access-Control-Allow-Origin'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'true'"
                     },
                     "ResponseTemplates": {
-                      "application/json": ""
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\"http://localhost:3000\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
                     }
                   }
                 ]
@@ -222,7 +239,8 @@
                   "ResponseParameters": {
                     "method.response.header.Access-Control-Allow-Origin": true,
                     "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
                   },
                   "ResponseModels": {}
                 }
@@ -238,12 +256,13 @@
                   {
                     "StatusCode": "200",
                     "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                      "method.response.header.Access-Control-Allow-Origin": "'http://localhost:3000'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,Access-Control-Allow-Origin'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'true'"
                     },
                     "ResponseTemplates": {
-                      "application/json": ""
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\"http://localhost:3000\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
                     }
                   }
                 ]
@@ -256,10 +275,57 @@
               }
             }
           },
-          "ApiGatewayMethodAny": {
+          "ApiGatewayMethodPostsOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
-              "HttpMethod": "ANY",
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'http://localhost:3000'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,Access-Control-Allow-Origin'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'true'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\"http://localhost:3000\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourcePosts"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
               "RequestParameters": {},
               "ResourceId": {
                 "Fn::GetAtt": [
@@ -351,7 +417,53 @@
               "AppLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1679091463151": {
+          "ApiGatewayMethodPostsGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourcePosts"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "AppLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "AppLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayDeployment1680153995496": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -362,8 +474,10 @@
             "DependsOn": [
               "ApiGatewayMethodOptions",
               "ApiGatewayMethodProxyVarOptions",
-              "ApiGatewayMethodAny",
-              "ApiGatewayMethodProxyVarAny"
+              "ApiGatewayMethodPostsOptions",
+              "ApiGatewayMethodGet",
+              "ApiGatewayMethodProxyVarAny",
+              "ApiGatewayMethodPostsGet"
             ]
           },
           "AppLambdaPermissionApiGateway": {
@@ -408,16 +522,16 @@
           "ServerlessDeploymentBucketName": {
             "Value": "my-social-deployment-bucket",
             "Export": {
-              "Name": "sls-my-social-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-my-social-dev-app-dev-ServerlessDeploymentBucketName"
             }
           },
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionYGJMubmSqYCYY56IM9rKQLxj4EQLqFTubQxTR92p10"
+              "Ref": "AppLambdaVersionofSTD6KAoHhAcdjGftqksbYSWZ2SaDRI4ywFqnLZg"
             },
             "Export": {
-              "Name": "sls-my-social-dev-AppLambdaFunctionQualifiedArn"
+              "Name": "sls-my-social-dev-app-dev-AppLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -443,7 +557,7 @@
               ]
             },
             "Export": {
-              "Name": "sls-my-social-dev-ServiceEndpoint"
+              "Name": "sls-my-social-dev-app-dev-ServiceEndpoint"
             }
           }
         }
@@ -458,12 +572,11 @@
           {
             "http": {
               "path": "",
-              "method": "any",
+              "method": "get",
               "cors": {
-                "origin": "*",
                 "methods": [
                   "OPTIONS",
-                  "ANY"
+                  "GET"
                 ],
                 "headers": [
                   "Content-Type",
@@ -471,10 +584,12 @@
                   "Authorization",
                   "X-Api-Key",
                   "X-Amz-Security-Token",
-                  "X-Amz-User-Agent",
-                  "X-Amzn-Trace-Id"
+                  "Access-Control-Allow-Origin"
                 ],
-                "allowCredentials": false
+                "allowCredentials": true,
+                "origins": [
+                  "http://localhost:3000"
+                ]
               },
               "integration": "AWS_PROXY"
             }
@@ -484,7 +599,6 @@
               "path": "{proxy+}",
               "method": "any",
               "cors": {
-                "origin": "*",
                 "methods": [
                   "OPTIONS",
                   "ANY"
@@ -495,28 +609,55 @@
                   "Authorization",
                   "X-Api-Key",
                   "X-Amz-Security-Token",
-                  "X-Amz-User-Agent",
-                  "X-Amzn-Trace-Id"
+                  "Access-Control-Allow-Origin"
                 ],
-                "allowCredentials": false
+                "allowCredentials": true,
+                "origins": [
+                  "http://localhost:3000"
+                ]
+              },
+              "integration": "AWS_PROXY"
+            }
+          },
+          {
+            "http": {
+              "path": "posts",
+              "method": "get",
+              "cors": {
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "Access-Control-Allow-Origin"
+                ],
+                "allowCredentials": true,
+                "origins": [
+                  "http://localhost:3000"
+                ]
               },
               "integration": "AWS_PROXY"
             }
           }
         ],
-        "name": "my-social-dev-app",
+        "name": "my-social-dev-app-dev-app",
         "package": {},
         "memory": 128,
         "timeout": 6,
         "runtime": "nodejs16.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionYGJMubmSqYCYY56IM9rKQLxj4EQLqFTubQxTR92p10"
+        "versionLogicalId": "AppLambdaVersionofSTD6KAoHhAcdjGftqksbYSWZ2SaDRI4ywFqnLZg"
       }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
     "initialServerlessConfig": {
-      "service": "my-social",
+      "service": "my-social-dev-app",
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
       },
@@ -527,18 +668,18 @@
         "patterns": [
           "!client/**"
         ],
-        "artifactsS3KeyDirname": "serverless/my-social/dev/code-artifacts",
+        "artifactsS3KeyDirname": "serverless/my-social-dev-app/dev/code-artifacts",
         "deploymentBucket": "my-social-deployment-bucket",
-        "artifact": "/Users/macosx/Documents/Projects/my-social/full-stack-app/.serverless/my-social.zip",
-        "artifactDirectoryName": "serverless/my-social/dev/1679091472381-2023-03-17T22:17:52.381Z"
+        "artifact": "/Users/macosx/Documents/Projects/my-social/full-stack-app/.serverless/my-social-dev-app.zip",
+        "artifactDirectoryName": "serverless/my-social-dev-app/dev/1680154009594-2023-03-30T05:26:49.594Z"
       }
     },
     "layers": {},
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/Users/macosx/Documents/Projects/my-social/full-stack-app/.serverless/my-social.zip"
+    "artifact": "/Users/macosx/Documents/Projects/my-social/full-stack-app/.serverless/my-social-dev-app.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/my-social/dev/1679091472381-2023-03-17T22:17:52.381Z",
-    "artifact": "my-social.zip"
+    "artifactDirectoryName": "serverless/my-social-dev-app/dev/1680154009594-2023-03-30T05:26:49.594Z",
+    "artifact": "my-social-dev-app.zip"
   }
 }

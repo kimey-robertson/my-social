@@ -36,6 +36,14 @@ const PORT = process.env.PORT || 3001;
 
 // Add middleware for handling CORS requests from index.html
 app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+
+// enable pre-flight request for all routes
+
+app.options('*', cors()) 
 
 // Add middware for parsing request bodies here:
 app.use(bodyParser.json());

@@ -16,8 +16,14 @@ export default function Posts() {
 
   // Fetching the post data from the db
   async function displayPosts() {
-    const url = `http://localhost:3001/posts`;
-    const res = await fetch(url);
+    const url = `https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/posts`;
+    const res = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     const data = await res.json();
     if (mainDisplay.currentDisplay === 'posts' && posts.postsLoaded === false) {
       dispatch(setPostsData(data));

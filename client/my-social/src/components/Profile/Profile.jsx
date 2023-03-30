@@ -14,7 +14,7 @@ export default function Profile() {
 
   async function updateUserInfo(userInfo) {
     try {
-      const response = await fetch(`http://localhost:3001/user`, {
+      const response = await fetch(`https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/user`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ export default function Profile() {
   }
   
   async function getUser(username) {
-    const url = `http://localhost:3001/user?username=${username}`;
+    const url = `https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/user?username=${username}`;
     const res = await fetch(url);
     const data = await res.json();
     if (res.status === 422) {
@@ -79,7 +79,7 @@ export default function Profile() {
 
   async function handleConfirmDeleteProfile() {
     try {
-      const response = await fetch(`http://localhost:3001/user`, {
+      const response = await fetch(`https://0rd16p43a9.execute-api.ap-southeast-2.amazonaws.com/dev/user`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
